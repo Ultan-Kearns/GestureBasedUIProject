@@ -1,0 +1,12 @@
+1st: Show graphical (Start game, close, setting, about, exit)
+2nd: Difficulty(Randomize sounds, reduce colour delay)
+
+Planning ideas:
+Difficulty:
+  Easy:
+  Medium:
+  Hard:
+Time limits for colours, time limits to guess
+Gameplay:
+User hears sounds and is shown lighted images and they have to select images that were lighted
+Ignore movement until the pattern are shown
