@@ -30,10 +30,10 @@ class MainApplication(GridLayout):
     def exit(self,instance):
         sys.exit()
     def voice_input():
-        while(1):
-            import sr as speech
-            speech.voice_input()
- 
+        import sr as speech
+        if("quit" in speech.voice_input() ):
+            sys.exit()
+
 class Menu(App):
     def build(self):
         return MainApplication();
