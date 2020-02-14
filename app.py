@@ -3,6 +3,10 @@ from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 import sys
+
+import speech_recognition as sr
+
+
 class MainMenu(GridLayout):
     def __init__(self,**kwargs):
         super(MainMenu, self).__init__(**kwargs)
