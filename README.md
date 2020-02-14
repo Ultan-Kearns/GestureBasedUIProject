@@ -1,4 +1,4 @@
-# GestureBasedUIProject by Ultan Kearns & Paul Kenny
+# Gesture Based UI Project by Ultan Kearns & Paul Kenny
 ## Produced for the fourth year GMIT module Gesture Based UI
 ### Lecturer: Damien Costello
 
