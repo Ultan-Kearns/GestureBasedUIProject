@@ -24,3 +24,5 @@ To run this program you just run the simple command app.py in the project direct
 > cd GestureBasedUIProject
 > python3 app.py
 ```
+
+See [development wiki page](https://github.com/Ultan-Kearns/GestureBasedUIProject/wiki/Development) for more.
