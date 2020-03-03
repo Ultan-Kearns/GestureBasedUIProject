@@ -17,7 +17,7 @@ class LevelMenu(Screen):
     pass
 class ScreenManagement(ScreenManager):
     pass
-# Create a screen manager
+# Create a screen manager - docs reference https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html
 sm = ScreenManager()
 sm.add_widget(MainMenu(name='menu'))
 sm.add_widget(LevelMenu(name='level'))
