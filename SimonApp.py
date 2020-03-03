@@ -11,7 +11,6 @@ import sr
 Builder.load_file('simon.kv')
 
 class MainMenu(Screen):
-    #sr.voice_input()
     pass
 class LevelMenu(Screen):
     pass
@@ -36,3 +35,4 @@ class MainApplication(App):
         return sm
 if __name__ == '__main__':
     MainApplication().run()
+    #will need sr to run in paralell with gui
