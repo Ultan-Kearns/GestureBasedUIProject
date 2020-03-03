@@ -1,16 +1,32 @@
+
 <MainMenu>:
+    name:"main"
     BoxLayout:
         orientation: 'vertical'
-
         Label:
             text: 'LOGO'
         Button:
             text: 'Start'
         Button:
             text: 'Level'
+            on_release: root.manager.current = "level"
         Button:
             text: 'Difficulty'
+            bind: "print(hi)"
         Button:
             text: 'Credits'
         Button:
             text: 'Exit'
+            on_press: app.root.sys.exit()
+<LevelMenu>:
+    name: "level"
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Levels'
+        Button:
+            text: '1'
+        Button:
+            text: '2'
+        Button:
+            text: '3'
