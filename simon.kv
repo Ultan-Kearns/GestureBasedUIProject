@@ -1,22 +1,22 @@
 
 <MainMenu>:
-    name:"main"
+    name:"mainmenu"
     BoxLayout:
         orientation: 'vertical'
         Label:
             text: 'LOGO'
         Button:
             text: 'Start'
+            on_release: root.manager.current = "game"
         Button:
             text: 'Level'
             on_release: root.manager.current = "level"
         Button:
             text: 'Difficulty'
+            on_release: root.manager.current = "difficulty"
         Button:
             text: 'Credits'
-        Button:
-            text: 'Exit'
-            on_press: app.root.sys.exit()
+            on_release: root.manager.current = "credits"
 <LevelMenu>:
     name: "level"
     BoxLayout:
@@ -30,5 +30,34 @@
         Button:
             text: '3'
         Button:
-            text: 'Back to Main'
-            on_press: root.manager.current ="main"
+            text: 'Back to Main Menu'
+            on_press: root.manager.current ="mainmenu"
+<DifficultyMenu>:
+    name: "difficulty"
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Levels'
+        Button:
+            text: 'Easy'
+        Button:
+            text: 'Medium'
+        Button:
+            text: 'Hard'
+        Button:
+            text: 'Back to Main Menu'
+            on_press: root.manager.current ="mainmenu"
+<CreditsMenu>:
+    name: "credits"
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Developed by "The Lads": Ultan Kearns & Paul Kenny'
+        Button:
+            text: 'Back to Main Menu'
+            on_press: root.manager.current ="mainmenu"
+<GameMenu>
+    name: "game"
+    orientation: 'vertical'
+    Label:
+        text: 'GAME'

@@ -15,15 +15,24 @@ class MainMenu(Screen):
     pass
 class LevelMenu(Screen):
     pass
+class DifficultyMenu(Screen):
+    pass
+class CreditsMenu(Screen):
+    pass
+class GameMenu(Screen):
+    pass
 class ScreenManagement(ScreenManager):
     pass
 # Create a screen manager - docs reference https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html
+# Need to add voice commands for each button - we can do this by returning value from sr script and have conditional statements
 sm = ScreenManager()
-sm.add_widget(MainMenu(name='menu'))
+sm.add_widget(MainMenu(name='mainmenu'))
+sm.add_widget(GameMenu(name='game'))
 sm.add_widget(LevelMenu(name='level'))
+sm.add_widget(DifficultyMenu(name='difficulty'))
+sm.add_widget(CreditsMenu(name='credits'))
 class MainApplication(App):
     def build(self):
         return sm
-main = MainApplication()
 if __name__ == '__main__':
     MainApplication().run()
