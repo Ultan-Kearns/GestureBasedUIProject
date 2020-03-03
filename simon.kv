@@ -12,7 +12,6 @@
             on_release: root.manager.current = "level"
         Button:
             text: 'Difficulty'
-            bind: "print(hi)"
         Button:
             text: 'Credits'
         Button:
@@ -30,3 +29,6 @@
             text: '2'
         Button:
             text: '3'
+        Button:
+            text: 'Back to Main'
+            on_press: root.manager.current ="main"
