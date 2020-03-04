@@ -1,10 +1,12 @@
-
 <MainMenu>:
     name:"mainmenu"
     BoxLayout:
         orientation: 'vertical'
         Label:
             text: 'LOGO'
+        Button:
+            text: "voice input"
+            on_release: sr.voice_input()
         Button:
             text: 'Start'
             on_release: root.manager.current = "game"
@@ -58,6 +60,15 @@
             on_press: root.manager.current ="mainmenu"
 <GameMenu>
     name: "game"
-    orientation: 'vertical'
-    Label:
-        text: 'GAME'
+    GridLayout:
+        cols: 2
+        rows: 2
+        Button:
+            background_color: (255,0,0,1)
+        Button:
+            background_color: (0,255,0,1)
+            row:2
+        Button:
+            background_color: (0,0,255,1)
+        Button:
+            background_color: (255,255,0,1)
