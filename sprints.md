@@ -1,7 +1,6 @@
 # Sprint 1 4th March - 10th
-+ Develop game board
++ Develop game board(Done)
 + Figure out voice commands
-+ Make menu
 + Get game logic
 + Get minimal game implementation
 # Sprint 2 10th March - 16th March

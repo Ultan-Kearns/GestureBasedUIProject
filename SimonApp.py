@@ -1,4 +1,7 @@
+import os
+os.environ['KIVY_MODULES_DIR'] = 'sr'
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
@@ -24,12 +27,19 @@ class ScreenManagement(ScreenManager):
     pass
 # Create a screen manager - docs reference https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html
 # Need to add voice commands for each button - we can do this by returning value from sr script and have conditional statements
+
 sm = ScreenManager()
 sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
 sm.add_widget(LevelMenu(name='level'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
+def voicecontrols():
+    while(1):
+        # can perform game events in here such as switching windows and game commands
+        s = sr.voice_input()
+        print (s)
+Clock.schedule_once(my_callback, 1)
 class MainApplication(App):
     def build(self):
         return sm
