@@ -34,7 +34,7 @@ sm.add_widget(GameMenu(name='game'))
 sm.add_widget(LevelMenu(name='level'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
-
+# may add screen to ask user if they want to use voice commands
 def VoiceControls(dx):
     sm.current = "game"
     # infinite loop for voice commands may be issue
@@ -48,6 +48,17 @@ def VoiceControls(dx):
         sys.exit()
     elif("play" in voiceCommand or "start" in voiceCommand):
         sm.current = 'game'
+        # need loop here for while back or exit is not in voiceCommand or while user has not lost game
+        if("red" in voiceCommand):
+            print("red")
+        elif("blue" in voiceCommand):
+            print("blue")
+        elif("yellow" in voiceCommand):
+            print("yellow")
+        elif("green" in voiceCommand):
+            print("green")
+        else:
+            print("Could not understand command - valid commands are red,green,blue & yellow")
     elif("developers" in voiceCommand or "credits" in voiceCommand):
         sm.current = 'credits'
     elif('back' in voiceCommand or 'main menu' in voiceCommand):
