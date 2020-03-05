@@ -9,29 +9,11 @@
             text: 'Start'
             on_release: root.manager.current = "game"
         Button:
-            text: 'Level'
-            on_release: root.manager.current = "level"
-        Button:
             text: 'Difficulty'
             on_release: root.manager.current = "difficulty"
         Button:
             text: 'Credits'
             on_release: root.manager.current = "credits"
-<LevelMenu>:
-    name: "level"
-    BoxLayout:
-        orientation: 'vertical'
-        Label:
-            text: 'Levels'
-        Button:
-            text: '1'
-        Button:
-            text: '2'
-        Button:
-            text: '3'
-        Button:
-            text: 'Back to Main Menu'
-            on_press: root.manager.current ="mainmenu"
 <DifficultyMenu>:
     name: "difficulty"
     BoxLayout:

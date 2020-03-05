@@ -31,27 +31,31 @@ class ScreenManagement(ScreenManager):
 sm = ScreenManager()
 sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
-sm.add_widget(LevelMenu(name='level'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
-def GameLogic():
-    print("test")
-    command = sr.voice_input()
-    while(not command):
-        command = sr.voice_input()
-    if("red" in voiceCommand):
-        print("red")
-    elif("blue" in voiceCommand):
-        print("blue")
-    elif("yellow" in voiceCommand):
-        print("yellow")
-    elif("green" in voiceCommand):
-        print("green")
-    else:
-        print("Could not understand command - valid commands are red,green,blue & yellow")
-    GameLogic()
+def GameLogic(dx):
+        # need someway to loop these but since call back is loop it'll break the app
+        # maybe unschedule event then new event
+        sm.current = 'game'
+        print("TESTING GAME")
+        voiceCommand = sr.voice_input()
+        while(not voiceCommand):
+                voiceCommand = sr.voice_input()
+        if("red" in voiceCommand):
+            print("red")
+        elif("blue" in voiceCommand):
+            print("blue")
+        elif("yellow" in voiceCommand):
+            print("yellow")
+        elif("green" in voiceCommand):
+            print("green")
+        else:
+            print("Could not understand command - valid commands are red,green,blue & yellow")
+            voiceCommand = sr.voice_input()
 # may add screen to ask user if they want to use voice commands
 def VoiceControls(dx):
+    # infinite loop for voice commands may be issue
+    # can perform game events in here such as switching windows and game commands
     voiceCommand = sr.voice_input()
     while(not voiceCommand):
         voiceCommand = sr.voice_input()
@@ -59,17 +63,18 @@ def VoiceControls(dx):
     if("quit" in voiceCommand or "exit" in voiceCommand or "close" in voiceCommand):
         sys.exit()
     elif("play" in voiceCommand or "start" in voiceCommand):
-        sm.current = 'game'
+        Clock.schedule_once(GameLogic,5)
     elif("developers" in voiceCommand or "credits" in voiceCommand):
         sm.current = 'credits'
     elif('back' in voiceCommand or 'main menu' in voiceCommand):
         sm.current =  'mainmenu'
+    elif('levels' in voiceCommand or 'change' in voiceCommand or 'level' in voiceCommand):
+            sm.current =  'level'
     else:
         #if user tries saying something that is not in commands
         print("Not a command valid commands are: ")
         voiceCommand = sr.voice_input()
-
-Clock.schedule_once(VoiceControls, 1)
+Clock.schedule_once(VoiceControls,1)
 class MainApplication(App):
     def build(self):
         return sm
