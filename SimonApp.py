@@ -34,19 +34,28 @@ sm.add_widget(GameMenu(name='game'))
 sm.add_widget(LevelMenu(name='level'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
+
 def VoiceControls(dx):
-    while(1):
-        # can perform game events in here such as switching windows and game commands
+    sm.current = "game"
+    # infinite loop for voice commands may be issue
+
+    # can perform game events in here such as switching windows and game commands
+    voiceCommand = sr.voice_input()
+    while(not voiceCommand):
         voiceCommand = sr.voice_input()
-        while(not voiceCommand):
-            voiceCommand = sr.voice_input()
-        #include options for switching game menus in here may separate into functions
-        if("quit" in voiceCommand or "exit" in voiceCommand or "close" in voiceCommand):
-            sys.exit()
-        else:
-            #if user tries saying something that is not in commands
-            print("Not a command valid commands are: ")
-            voiceCommand = sr.voice_input()
+    #include options for switching game menus in here may separate into functions
+    if("quit" in voiceCommand or "exit" in voiceCommand or "close" in voiceCommand):
+        sys.exit()
+    elif("play" in voiceCommand or "start" in voiceCommand):
+        sm.current = 'game'
+    elif("developers" in voiceCommand or "credits" in voiceCommand):
+        sm.current = 'credits'
+    elif('back' in voiceCommand or 'main menu' in voiceCommand):
+        sm.current =  'mainmenu'
+    else:
+        #if user tries saying something that is not in commands
+        print("Not a command valid commands are: ")
+        voiceCommand = sr.voice_input()
 
 Clock.schedule_once(VoiceControls, 1)
 class MainApplication(App):

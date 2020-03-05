@@ -1,12 +1,10 @@
+# we left in the on_release method as it extends functionality to those who don't want to talk
 <MainMenu>:
     name:"mainmenu"
     BoxLayout:
         orientation: 'vertical'
         Label:
             text: 'LOGO'
-        Button:
-            text: "voice input"
-            on_release: sr.voice_input()
         Button:
             text: 'Start'
             on_release: root.manager.current = "game"
