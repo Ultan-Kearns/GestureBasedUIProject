@@ -33,8 +33,12 @@ sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
-def test():
+def GameLogic():
+    #here we will define logic of the game and how it will function maybe get squares to light up
+    print("IN game logic")
+def GameControls():
     global sm
+    #call thread to start game logic here
     while(1):
         # need someway to loop these but since call back is loop it'll break the app
         # maybe unschedule event then new event
@@ -71,7 +75,7 @@ def Main():
         elif("play" in voiceCommand.lower() or "start" in voiceCommand.lower() or "game" in voiceCommand.lower()):
             sm.current = 'game'
             Clock.unschedule(Main)
-            game = Thread(target = test)
+            game = Thread(target = GameControls)
             game.start()
             main.stop()
         elif("developers" in voiceCommand.lower() or "credits" in voiceCommand.lower()):
