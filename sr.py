@@ -7,7 +7,7 @@ def voice_input():
     microphone = sr.Microphone()
     #boiler plate code to filter out ambient noise noise from mic
     with microphone as source:
-        r.adjust_for_ambient_noise(source)
+        r.adjust_for_ambient_noise(source,duration = 1)
         print("Say something!")
         audio = r.listen(source)
     #test example taken from docs

@@ -1,6 +1,6 @@
 # Sprint 1 4th March - 10th
 + Develop game board(Done)
-+ Figure out voice commands
++ Figure out voice commands(Sort of done)
 + Allow user to navigate screens using voice commands(Done)
 + Get game logic
 + Get minimal game implementation
