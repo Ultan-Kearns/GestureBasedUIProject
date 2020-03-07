@@ -24,10 +24,8 @@ class GameMenu(Screen):
     pass
 class ScreenManagement(ScreenManager):
     pass
-
 # Create a screen manager - docs reference https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html
 # Need to add voice commands for each button - we can do this by returning value from sr script and have conditional statements
-
 sm = ScreenManager()
 sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
@@ -55,16 +53,17 @@ def GameControls():
             print("green")
         elif("quit" in voiceCommand.lower() or "exit" in voiceCommand.lower() or "close" in voiceCommand.lower()):
             sm.current="mainmenu"
-            game.stop()
+            main = Thread(target=Main)
             main.start()
             break
+
         else:
             print("Could not understand command - valid commands are red,green,blue & yellow")
             voiceCommand = sr.voice_input()
 # may add screen to ask user if they want to use voice commands
 def Main():
-    # infinite loop for voice commands may be issue
     # can perform game events in here such as switching windows and game commands
+    # infinite loop for voice commands may be issue
     while(1):
         voiceCommand = sr.voice_input()
         while(not voiceCommand):
@@ -72,12 +71,12 @@ def Main():
         #include options for switching game menus in here may separate into functions
         if("quit" in voiceCommand.lower() or "exit" in voiceCommand.lower() or "close" in voiceCommand.lower()):
             sys.exit()
+            break
         elif("play" in voiceCommand.lower() or "start" in voiceCommand.lower() or "game" in voiceCommand.lower()):
             sm.current = 'game'
-            Clock.unschedule(Main)
-            game = Thread(target = GameControls)
+            #need to find way to stop threads
             game.start()
-            main.stop()
+            main.terminate()
         elif("developers" in voiceCommand.lower() or "credits" in voiceCommand.lower()):
             sm.current = 'credits'
         elif('back' in voiceCommand.lower() or 'main menu' in voiceCommand.lower()):
@@ -89,6 +88,7 @@ def Main():
             print("Not a command valid commands are: ")
 main = Thread(target=Main)
 main.start()
+game = Thread(target = GameControls)
 class MainApplication(App):
     def build(self):
         return sm
