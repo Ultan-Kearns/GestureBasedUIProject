@@ -5,6 +5,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
+#https://docs.python.org/2/library/threading.html info about threading
 from threading import Thread
 import sys
 from kivy.lang import Builder
@@ -53,13 +54,15 @@ def GameControls():
             print("green")
         elif("quit" in voiceCommand.lower() or "exit" in voiceCommand.lower() or "close" in voiceCommand.lower()):
             sm.current="mainmenu"
+            #restart thread
             main = Thread(target=Main)
+            main.setDaemon(True)
             main.start()
             break
-
         else:
             print("Could not understand command - valid commands are red,green,blue & yellow")
             voiceCommand = sr.voice_input()
+    print("Exiting game")
 # may add screen to ask user if they want to use voice commands
 def Main():
     # can perform game events in here such as switching windows and game commands
@@ -75,8 +78,10 @@ def Main():
         elif("play" in voiceCommand.lower() or "start" in voiceCommand.lower() or "game" in voiceCommand.lower()):
             sm.current = 'game'
             #need to find way to stop threads
+            game = Thread(target = GameControls)
+            game.setDaemon(True)
             game.start()
-            main.terminate()
+            break
         elif("developers" in voiceCommand.lower() or "credits" in voiceCommand.lower()):
             sm.current = 'credits'
         elif('back' in voiceCommand.lower() or 'main menu' in voiceCommand.lower()):
@@ -86,9 +91,10 @@ def Main():
         else:
             #if user tries saying something that is not in commands
             print("Not a command valid commands are: ")
+    print("Exiting main")
 main = Thread(target=Main)
+main.setDaemon(True)
 main.start()
-game = Thread(target = GameControls)
 class MainApplication(App):
     def build(self):
         return sm
