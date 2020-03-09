@@ -32,11 +32,13 @@ sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
-def GameLogic():
-    #here we will define logic of the game and how it will function maybe get squares to light up
-    print("IN game logic")
+guess = ""
 def GameControls():
     global sm
+    global guess
+    gameLogic = Thread(target = GameLogic)
+    gameLogic.setDaemon(True)
+    gameLogic.start()
     #call thread to start game logic here
     while(1):
         # need someway to loop these but since call back is loop it'll break the app
@@ -46,12 +48,16 @@ def GameControls():
                 voiceCommand = sr.voice_input()
         if("red" in voiceCommand.lower()):
             print("red")
+            guess = 1
         elif("blue" in voiceCommand.lower()):
             print("blue")
+            guess = 2
         elif("yellow" in voiceCommand.lower()):
             print("yellow")
+            guess = 3
         elif("green" in voiceCommand.lower()):
             print("green")
+            guess = 4
         elif("quit" in voiceCommand.lower() or "exit" in voiceCommand.lower() or "close" in voiceCommand.lower()):
             sm.current="mainmenu"
             #restart thread
@@ -63,6 +69,27 @@ def GameControls():
             print("Could not understand command - valid commands are red,green,blue & yellow")
             voiceCommand = sr.voice_input()
     print("Exiting game")
+def GameLogic():
+    #generate pattern here use array
+    #only break if the pattern is wrong
+    #this variable will be used to compare array index to guess
+    arrIndex = 0;
+    # need to append to pattern in loop if user guesses correct
+    pattern = [1,2,3,4]
+    global guess
+    while(1):
+        if(guess == pattern[arrIndex] and guess != ""):
+            print("correct keep going")
+            if(arrIndex == pattern.size()):
+                #will generate random number and add to pattern
+                patter = [1,2,3,4,5]
+            arrIndex += 1
+        elif(guess != pattern[arrIndex] and guess != ""):
+            print("BREAKING ", pattern[arrIndex], "  GUESS " , guess)
+            break
+        else:
+            print("append array here")
+    print("Ending game logic")
 # may add screen to ask user if they want to use voice commands
 def Main():
     # can perform game events in here such as switching windows and game commands
@@ -73,7 +100,7 @@ def Main():
             voiceCommand = sr.voice_input()
         #include options for switching game menus in here may separate into functions
         if("quit" in voiceCommand.lower() or "exit" in voiceCommand.lower() or "close" in voiceCommand.lower()):
-            sys.exit()
+            print("IN HERE")
             break
         elif("play" in voiceCommand.lower() or "start" in voiceCommand.lower() or "game" in voiceCommand.lower()):
             sm.current = 'game'
@@ -92,9 +119,11 @@ def Main():
             #if user tries saying something that is not in commands
             print("Not a command valid commands are: ")
     print("Exiting main")
+    sys.exit()
 main = Thread(target=Main)
 main.setDaemon(True)
 main.start()
+
 class MainApplication(App):
     def build(self):
         return sm
