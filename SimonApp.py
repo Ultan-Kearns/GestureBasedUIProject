@@ -10,6 +10,7 @@ from threading import Thread
 import sys
 from kivy.lang import Builder
 import sr
+from random import randint
 # Load kv file
 Builder.load_file('simon.kv')
 
@@ -71,6 +72,7 @@ def GameLogic():
             arrIndex += 1
         elif(guess != pattern[arrIndex] and guess != ""):
             print("BREAKING ", pattern[arrIndex], "  GUESS " , guess)
+            print("HAHA FAILURE, YOU FAILED HAHAHAHHAHAHHAHHAHAHHAHAHAH NOOB")
             sm.current = "mainmenu"
             main = Thread(target=Main)
             main.setDaemon(True)
@@ -78,11 +80,17 @@ def GameLogic():
             break
         else:
             print("append array here")
+        #if user has got the pattern then this will execute
         if(arrIndex == len(pattern)):
             print("CONGRATS YOU GOT THE PATTERN")
             #will generate random number and add to pattern
-            pattern = [1,2,3,4,1]
+            #just using var random for testing purposes
+            random = randint(1,4)
+            print("RANDOM ", random)
+            pattern.append(random)
             arrIndex = 0
+            print(arrIndex)
+            print(pattern)
     print("Ending game logic")
 # may add screen to ask user if they want to use voice commands
 def Main():
@@ -95,6 +103,7 @@ def Main():
         #include options for switching game menus in here may separate into functions
         if("quit" in voiceCommand.lower() or "exit" in voiceCommand.lower() or "close" in voiceCommand.lower()):
             print("IN HERE")
+            break
             break
         elif("play" in voiceCommand.lower() or "start" in voiceCommand.lower() or "game" in voiceCommand.lower()):
             sm.current = 'game'
@@ -114,6 +123,7 @@ def Main():
             print("Not a command valid commands are: ")
     print("Exiting main")
     sys.exit()
+
 main = Thread(target=Main)
 main.setDaemon(True)
 main.start()
