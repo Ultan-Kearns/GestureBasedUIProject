@@ -32,17 +32,15 @@ sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
-guess = ""
-def GameControls():
-    global sm
+def GameLogic():
+    #generate pattern here use array
+    #only break if the pattern is wrong
+    #this variable will be used to compare array index to guess
+    arrIndex = 0;
+    # need to append to pattern in loop if user guesses correct
+    pattern = [1,2,3,4]
     global guess
-    gameLogic = Thread(target = GameLogic)
-    gameLogic.setDaemon(True)
-    gameLogic.start()
-    #call thread to start game logic here
     while(1):
-        # need someway to loop these but since call back is loop it'll break the app
-        # maybe unschedule event then new event
         voiceCommand = sr.voice_input()
         while(not voiceCommand):
                 voiceCommand = sr.voice_input()
@@ -68,27 +66,23 @@ def GameControls():
         else:
             print("Could not understand command - valid commands are red,green,blue & yellow")
             voiceCommand = sr.voice_input()
-    print("Exiting game")
-def GameLogic():
-    #generate pattern here use array
-    #only break if the pattern is wrong
-    #this variable will be used to compare array index to guess
-    arrIndex = 0;
-    # need to append to pattern in loop if user guesses correct
-    pattern = [1,2,3,4]
-    global guess
-    while(1):
-        if(guess == pattern[arrIndex] and guess != ""):
+        if(guess == pattern[arrIndex] and guess != "" and arrIndex != len(pattern)):
             print("correct keep going")
-            if(arrIndex == pattern.size()):
-                #will generate random number and add to pattern
-                patter = [1,2,3,4,5]
             arrIndex += 1
         elif(guess != pattern[arrIndex] and guess != ""):
             print("BREAKING ", pattern[arrIndex], "  GUESS " , guess)
+            sm.current = "mainmenu"
+            main = Thread(target=Main)
+            main.setDaemon(True)
+            main.start()
             break
         else:
             print("append array here")
+        if(arrIndex == len(pattern)):
+            print("CONGRATS YOU GOT THE PATTERN")
+            #will generate random number and add to pattern
+            pattern = [1,2,3,4,1]
+            arrIndex = 0
     print("Ending game logic")
 # may add screen to ask user if they want to use voice commands
 def Main():
@@ -105,7 +99,7 @@ def Main():
         elif("play" in voiceCommand.lower() or "start" in voiceCommand.lower() or "game" in voiceCommand.lower()):
             sm.current = 'game'
             #need to find way to stop threads
-            game = Thread(target = GameControls)
+            game = Thread(target = GameLogic)
             game.setDaemon(True)
             game.start()
             break
