@@ -5,6 +5,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.animation import Animation
 #https://docs.python.org/2/library/threading.html info about threading
 from threading import Thread
 import sys
@@ -145,6 +146,12 @@ main.start()
 class MainApplication(App):
     def build(self):
         return sm
+    def animate(self,widget,color):
+        #ref for tutorial: https://youtu.be/qMKPNqbuR5Y
+        anim = Animation(background_color = (255,255,255,1),duration = 1)
+        anim += Animation(background_color=color,duration=1)
+        anim.start(widget)
+
 
 if __name__ == '__main__':
     MainApplication().run()
