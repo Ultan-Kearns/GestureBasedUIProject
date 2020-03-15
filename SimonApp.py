@@ -33,8 +33,20 @@ sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
-def Board():
-    print("Do board flash here")
+def Board(pattern):
+     i = 0
+     for i in range(0,len(pattern)):
+        if(pattern[i] == 1):
+            print("red")
+        elif(pattern[i] == 2):
+            print("blue")
+        elif(pattern[i] == 3):
+            print("yellow")
+        elif(pattern[i] == 4):
+            print("Green")
+        else:
+            print("HOW JUST HOW YOU BROKE THE GAME HOPE YOU'RE PROUD HAHAHAA ")
+
 def GameLogic():
     #generate pattern here use array
     #only break if the pattern is wrong
@@ -68,8 +80,7 @@ def GameLogic():
             break
         else:
             print("Could not understand command - valid commands are red,green,blue & yellow")
-            voiceCommand = sr.voice_input()
-            guess = ""
+            continue
         if(guess == pattern[arrIndex] and guess != "" and arrIndex != len(pattern)):
             print("correct keep going")
             arrIndex += 1
@@ -83,7 +94,7 @@ def GameLogic():
             break
         if(arrIndex == len(pattern)):
             print("CONGRATS YOU GOT THE PATTERN")
-            board = Thread(target=Board)
+            board = Thread(target=Board,args=[pattern])
             board.setDaemon(True)
             board.start()
             #will generate random number and add to pattern
