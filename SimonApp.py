@@ -34,11 +34,13 @@ sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
+
 def Board(pattern):
      i = 0
      for i in range(0,len(pattern)):
         if(pattern[i] == 1):
             print("red")
+
         elif(pattern[i] == 2):
             print("blue")
         elif(pattern[i] == 3):
@@ -56,6 +58,10 @@ def GameLogic():
     # need to append to pattern in loop if user guesses correct
     pattern = [1,2,3,4]
     global guess
+    #flash user ;)
+    board = Thread(target=Board,args=[pattern])
+    board.setDaemon(True)
+    board.start()
     while(1):
         voiceCommand = sr.voice_input()
         while(not voiceCommand):
@@ -119,7 +125,7 @@ def Main():
         if("quit" in voiceCommand.lower() or "exit" in voiceCommand.lower() or "close" in voiceCommand.lower()):
             print("IN HERE")
             break
-            break
+
         elif("play" in voiceCommand.lower() or "start" in voiceCommand.lower() or "game" in voiceCommand.lower()):
             sm.current = 'game'
             #need to find way to stop threads
@@ -149,9 +155,10 @@ class MainApplication(App):
     def animate(self,widget,color):
         #ref for tutorial: https://youtu.be/qMKPNqbuR5Y
         anim = Animation(background_color = (255,255,255,1),duration = 1)
-        anim += Animation(background_color=color,duration=1)
+        anim += Animation(background_color=color,duration=0.3)
         anim.start(widget)
-
+        self.state = "down"
+        self.text = "FUCK"
 
 if __name__ == '__main__':
     MainApplication().run()
