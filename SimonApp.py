@@ -37,6 +37,7 @@ sm.add_widget(CreditsMenu(name='credits'))
 
 def Board(pattern):
      i = 0
+     # make buttons flash using animate function
      for i in range(0,len(pattern)):
         if(pattern[i] == 1):
             print("red")
@@ -101,9 +102,6 @@ def GameLogic():
             break
         if(arrIndex == len(pattern)):
             print("CONGRATS YOU GOT THE PATTERN")
-            board = Thread(target=Board,args=[pattern])
-            board.setDaemon(True)
-            board.start()
             #will generate random number and add to pattern
             #just using var random for testing purposes
             random = randint(1,4)
@@ -112,6 +110,9 @@ def GameLogic():
             arrIndex = 0
             print(arrIndex)
             print(pattern)
+            board = Thread(target=Board,args=[pattern])
+            board.setDaemon(True)
+            board.start()
     print("Ending game logic")
 # may add screen to ask user if they want to use voice commands
 def Main():
@@ -157,9 +158,6 @@ class MainApplication(App):
         anim = Animation(background_color = (255,255,255,1),duration = 1)
         anim += Animation(background_color=color,duration=0.3)
         anim.start(widget)
-        self.state = "down"
-        self.text = "FUCK"
-
 if __name__ == '__main__':
     MainApplication().run()
     #will need sr to run in paralell with gui
