@@ -6,6 +6,8 @@ from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.animation import Animation
+from pydub.playback import play
+from pydub import AudioSegment
 #https://docs.python.org/2/library/threading.html info about threading
 from threading import Thread
 import sys
@@ -37,17 +39,24 @@ sm.add_widget(CreditsMenu(name='credits'))
 
 def Board(pattern):
      i = 0
-     # make buttons flash using animate function
+     # make buttons flash using animate function - note to self get rid of prints
      for i in range(0,len(pattern)):
         if(pattern[i] == 1):
             print("red")
-
+            sound = AudioSegment.from_mp3('red.mp3')
+            play(sound)
         elif(pattern[i] == 2):
             print("blue")
+            sound = AudioSegment.from_mp3('blue.mp3')
+            play(sound)
         elif(pattern[i] == 3):
             print("yellow")
+            sound = AudioSegment.from_mp3('yellow.mp3')
+            play(sound)
         elif(pattern[i] == 4):
             print("Green")
+            sound = AudioSegment.from_mp3('green.mp3')
+            play(sound)
         else:
             print("HOW JUST HOW YOU BROKE THE GAME HOPE YOU'RE PROUD HAHAHAA ")
 
@@ -68,16 +77,20 @@ def GameLogic():
         while(not voiceCommand):
                 voiceCommand = sr.voice_input()
         if("red" in voiceCommand.lower()):
-            print("red")
+            sound = AudioSegment.from_mp3('red.mp3')
+            play(sound)
             guess = 1
         elif("blue" in voiceCommand.lower()):
-            print("blue")
+            sound = AudioSegment.from_mp3('blue.mp3')
+            play(sound)
             guess = 2
         elif("yellow" in voiceCommand.lower()):
-            print("yellow")
+            sound = AudioSegment.from_mp3('yellow.mp3')
+            play(sound)
             guess = 3
         elif("green" in voiceCommand.lower()):
-            print("green")
+            sound = AudioSegment.from_mp3('green.mp3')
+            play(sound)
             guess = 4
         elif("quit" in voiceCommand.lower() or "exit" in voiceCommand.lower() or "close" in voiceCommand.lower()):
             sm.current="mainmenu"
