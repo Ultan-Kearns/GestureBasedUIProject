@@ -10,7 +10,7 @@ def voice_input():
         r.adjust_for_ambient_noise(source,duration = 1)
         print("Say something!")
         audio = r.listen(source)
-    #test example taken from docs
+    #test example taken from Speech Recognition docs
     try:
         print("Google Speech Recognition thinks you said " + r.recognize_google(audio))
         return r.recognize_google(audio)

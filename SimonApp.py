@@ -15,7 +15,7 @@ from kivy.lang import Builder
 import sr
 from random import randint
 # Load kv file
-Builder.load_file('simon.kv')
+Builder.load_file('SimonApp.kv')
 
 class MainMenu(Screen):
     pass
@@ -37,12 +37,21 @@ sm.add_widget(GameMenu(name='game'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
 
+def animate(self,widget,color):
+    #ref for tutorial: https://youtu.be/qMKPNqbuR5Y
+    anim = Animation(background_color = (255,255,255,1),duration = 1)
+    anim += Animation(background_color=color,duration=1)
+    anim.start(widget)
+
 def Board(pattern):
      i = 0
      # make buttons flash using animate function - note to self get rid of prints
      for i in range(0,len(pattern)):
         if(pattern[i] == 1):
             print("red")
+            widget = GameMenu()
+            print("COLOR " ,widget.ids["red"])
+            animate(widget.ids["red"],widget.ids["red"],widget.ids["red"].color)
             sound = AudioSegment.from_mp3('red.mp3')
             play(sound)
         elif(pattern[i] == 2):
@@ -166,11 +175,7 @@ main.start()
 class MainApplication(App):
     def build(self):
         return sm
-    def animate(self,widget,color):
-        #ref for tutorial: https://youtu.be/qMKPNqbuR5Y
-        anim = Animation(background_color = (255,255,255,1),duration = 1)
-        anim += Animation(background_color=color,duration=0.3)
-        anim.start(widget)
+
 if __name__ == '__main__':
     MainApplication().run()
     #will need sr to run in paralell with gui
