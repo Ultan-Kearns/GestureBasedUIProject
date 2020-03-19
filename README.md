@@ -2,7 +2,7 @@
 
 Produced for Gesture Based UI module in 4th year, (Honours) Software Development, Galway-Mayo Institute Of Technology.
 Lecturer: Damien Costello
-
+Video: https://youtu.be/jgFtwVOeVkg
 ## Premise
 
 This project is based on the popular game [Simon](https://en.wikipedia.org/wiki/Simon_(game)) which has the player memorise a series of colours creating a pattern which the player must re-enter. This is a gesture based project and will utilise voice recognition.  I have modified this application to be hearing based as well as memory based as I am a guitarist and I thought it would be a fantastic idea to use an app that would be beneficial to my playing.
