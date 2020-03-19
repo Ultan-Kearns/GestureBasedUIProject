@@ -1,19 +1,19 @@
 # we left in the on_release method as it extends functionality to those who don't want to talk
+#although it won't start threads
 <MainMenu>:
     name:"mainmenu"
     BoxLayout:
         orientation: 'vertical'
         Label:
-            text: 'Welcome to Simon - The memory based game that will test your brain'
+            text: 'Welcome to Simon - The memory/tone based game that will test your brain'
         Button:
             text: 'Play Game'
-            on_release: root.manager.current = "game"
         Button:
             text: 'Difficulty'
-            on_release: root.manager.current = "difficulty"
+        Button:
+            text:'Tutorial'
         Button:
             text: 'Credits'
-            on_release: root.manager.current = "credits"
 <DifficultyMenu>:
     name: "difficulty"
     BoxLayout:
@@ -46,9 +46,7 @@
         rows: 2
         Button:
             id: red
-            text:"RED"
             background_color: (255,0,0,1)
-            on_release: app.animate(self,(255,0,0,1))
         Button:
             id: blue
             background_color: (0,255,0,1)
@@ -58,3 +56,22 @@
         Button:
             id: yellow
             background_color: (255,255,0,1)
+<TutorialMenu>:
+    name: "tutorial"
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'This game will test both your memory and your hearing'
+        Label:
+            text: 'The game starts with a simple pattern red,blue, yellow and green'
+        Label:
+            text: 'You must memorize the tones of each colour'
+        Label:
+            text:'and repeat the pattern of tones that you will hear at the start of each round'
+        Label:
+            text: 'If you guess a wrong color you will have to restart from the beginning and you will hear a set of power chords'
+        Label:
+            text: 'Good luck! You\'ll need it'
+        Button:
+            text: 'Back to Main Menu'
+            on_press: root.manager.current ="mainmenu"

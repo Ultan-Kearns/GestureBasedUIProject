@@ -1,7 +1,5 @@
 from kivy.app import App
-from kivy.clock import Clock
 from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -27,7 +25,7 @@ class CreditsMenu(Screen):
     pass
 class GameMenu(Screen):
     pass
-class ScreenManagement(ScreenManager):
+class TutorialMenu(Screen):
     pass
 # Create a screen manager - docs reference https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html
 # Need to add voice commands for each red_button - we can do this by returning value from sr script and have conditional statements
@@ -36,21 +34,21 @@ sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
 sm.add_widget(DifficultyMenu(name='difficulty'))
 sm.add_widget(CreditsMenu(name='credits'))
-
-def animate(self,widget,color):
+sm.add_widget(TutorialMenu(name='tutorial'))
+def animate(widget,color):
     #ref for tutorial: https://youtu.be/qMKPNqbuR5Y
-    anim = Animation(background_color = (255,255,255,1),duration = 100)
-    anim += Animation(background_color=color,duration=10)
-    anim += Animation(background_color=color,duration=0.3)
+    anim = Animation(background_color = (255,255,255,1),duration = 1)
+    anim += Animation(background_color=color,duration=1)
+    anim += Animation(background_color=widget.color,duration=0.3)
     anim.start(widget)
-    print(self, " ", widget)
-
 def Board(pattern):
      i = 0
      # make buttons flash using animate function - note to self get rid of prints
      for i in range(0,len(pattern)):
         if(pattern[i] == 1):
-            print("red")
+            widget = GameMenu()
+            button_red = widget.ids.red
+            animate(button_red,button_red.background_color)
             sound = AudioSegment.from_mp3('red.mp3')
             play(sound)
         elif(pattern[i] == 2):
@@ -59,6 +57,10 @@ def Board(pattern):
             play(sound)
         elif(pattern[i] == 3):
             print("yellow")
+            widget = GameMenu()
+            button_yellow = widget.ids["yellow"]
+            button_yellow.text = "AAAAAAA"
+            print(button_yellow.text)
             sound = AudioSegment.from_mp3('yellow.mp3')
             play(sound)
         elif(pattern[i] == 4):
@@ -85,8 +87,10 @@ def GameLogic(lives):
         while(not voiceCommand):
                 voiceCommand = sr.voice_input()
         if("red" in voiceCommand.lower()):
+
             sound = AudioSegment.from_mp3('red.mp3')
             play(sound)
+
             guess = 1
         elif("blue" in voiceCommand.lower()):
             sound = AudioSegment.from_mp3('blue.mp3')
@@ -115,6 +119,8 @@ def GameLogic(lives):
             arrIndex += 1
         elif(guess != pattern[arrIndex] and guess != ""):
             lives = lives - 1
+            sound = AudioSegment.from_mp3('fail.mp3')
+            play(sound)
             print("lives",lives)
             if(lives <= 0):
                 print("BREAKING ", pattern[arrIndex], "  GUESS " , guess)
@@ -184,9 +190,11 @@ def Main():
             game.setDaemon(True)
             game.start()
             break
+        elif("tutorial" in voiceCommand.lower() or "help" in voiceCommand.lower()):
+            sm.current = 'tutorial'
         else:
             #if user tries saying something that is not in commands
-            print("Not a command valid commands are: ")
+            print("Not a command, use button labels on screen for valid commands or try saying\'Play a game\' ", voiceCommand)
     print("Exiting main")
     sys.exit()
 
@@ -197,13 +205,6 @@ main.start()
 class MainApplication(App):
     def build(self):
         return sm
-    def animate(self,widget,color):
-        #ref for tutorial: https://youtu.be/qMKPNqbuR5Y
-        anim = Animation(background_color = (255,255,255,1),duration = 1)
-        anim += Animation(background_color=color,duration=1)
-        anim += Animation(background_color=color,duration=0.3)
-        anim.start(widget)
-        print("IN Main ",self, " ", widget)
 if __name__ == '__main__':
     MainApplication().run()
     #will need sr to run in paralell with gui
