@@ -9,7 +9,7 @@ This project is based on the popular game [Simon](https://en.wikipedia.org/wiki/
 
 ## Technical Information
 
-This program was produced using Python and the graphics library [Kivy](https://kivy.org/#home) and Python's speech recognition library (SpeechRecognition).
+This program was produced using Python and the graphics library [Kivy](https://kivy.org/#home) and Python's speech recognition library (SpeechRecognition).  This application requires an internet connection as it utilizes Google Speech API.
 
 ## Why Python
 
