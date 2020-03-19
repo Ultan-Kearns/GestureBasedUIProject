@@ -164,23 +164,26 @@ def Main():
             sm.current =  'mainmenu'
         elif('level' in voiceCommand.lower() or 'change' in voiceCommand.lower() or 'difficulty' in voiceCommand):
             sm.current =  'difficulty'
-        if("easy" in voiceCommand.lower()):
+        if("easy" in voiceCommand.lower() and sm.current == 'difficulty'):
             sm.current = 'game'
             #need to find way to stop threads
             game = Thread(target = GameLogic,args=[3])
             game.setDaemon(True)
             game.start()
-        elif("medium" in voiceCommand.lower()):
+            break
+        elif("medium" in voiceCommand.lower() and sm.current ==  'difficulty'):
             sm.current = 'game'
             game = Thread(target = GameLogic,args=[2])
             game.setDaemon(True)
             game.start()
-        elif("hard" in voiceCommand.lower()):
+            break
+        elif("hard" in voiceCommand.lower() and sm.current=='difficulty'):
             sm.current = 'game'
             #need to find way to stop threads
             game = Thread(target = GameLogic,args=[1])
             game.setDaemon(True)
             game.start()
+            break
         else:
             #if user tries saying something that is not in commands
             print("Not a command valid commands are: ")
