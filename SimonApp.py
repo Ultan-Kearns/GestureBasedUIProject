@@ -15,7 +15,7 @@ from kivy.lang import Builder
 import sr
 from random import randint
 # Load kv file
-Builder.load_file('SimonApp.kv')
+Builder.load_file('simon.kv')
 
 class MainMenu(Screen):
     pass
@@ -30,7 +30,7 @@ class GameMenu(Screen):
 class ScreenManagement(ScreenManager):
     pass
 # Create a screen manager - docs reference https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html
-# Need to add voice commands for each button - we can do this by returning value from sr script and have conditional statements
+# Need to add voice commands for each red_button - we can do this by returning value from sr script and have conditional statements
 sm = ScreenManager()
 sm.add_widget(MainMenu(name='mainmenu'))
 sm.add_widget(GameMenu(name='game'))
@@ -39,9 +39,11 @@ sm.add_widget(CreditsMenu(name='credits'))
 
 def animate(self,widget,color):
     #ref for tutorial: https://youtu.be/qMKPNqbuR5Y
-    anim = Animation(background_color = (255,255,255,1),duration = 1)
-    anim += Animation(background_color=color,duration=1)
+    anim = Animation(background_color = (255,255,255,1),duration = 100)
+    anim += Animation(background_color=color,duration=10)
+    anim += Animation(background_color=color,duration=0.3)
     anim.start(widget)
+    print(self, " ", widget)
 
 def Board(pattern):
      i = 0
@@ -49,9 +51,6 @@ def Board(pattern):
      for i in range(0,len(pattern)):
         if(pattern[i] == 1):
             print("red")
-            widget = GameMenu()
-            print("COLOR " ,widget.ids["red"])
-            animate(widget.ids["red"],widget.ids["red"],widget.ids["red"].color)
             sound = AudioSegment.from_mp3('red.mp3')
             play(sound)
         elif(pattern[i] == 2):
@@ -69,7 +68,7 @@ def Board(pattern):
         else:
             print("HOW JUST HOW YOU BROKE THE GAME HOPE YOU'RE PROUD HAHAHAA ")
 
-def GameLogic():
+def GameLogic(lives):
     #generate pattern here use array
     #only break if the pattern is wrong
     #this variable will be used to compare array index to guess
@@ -115,13 +114,17 @@ def GameLogic():
             print("correct keep going")
             arrIndex += 1
         elif(guess != pattern[arrIndex] and guess != ""):
-            print("BREAKING ", pattern[arrIndex], "  GUESS " , guess)
-            print("HAHA FAILURE, YOU FAILED HAHAHAHHAHAHHAHHAHAHHAHAHAH NOOB")
-            sm.current = "mainmenu"
-            main = Thread(target=Main)
-            main.setDaemon(True)
-            main.start()
-            break
+            lives = lives - 1
+            print("lives",lives)
+            if(lives <= 0):
+                print("BREAKING ", pattern[arrIndex], "  GUESS " , guess)
+                print("HAHA FAILURE, YOU FAILED HAHAHAHHAHAHHAHHAHAHHAHAHAH NOOB")
+                sm.current = "mainmenu"
+                main = Thread(target=Main)
+                main.setDaemon(True)
+                main.start()
+                break
+            continue
         if(arrIndex == len(pattern)):
             print("CONGRATS YOU GOT THE PATTERN")
             #will generate random number and add to pattern
@@ -148,11 +151,10 @@ def Main():
         if("quit" in voiceCommand.lower() or "exit" in voiceCommand.lower() or "close" in voiceCommand.lower()):
             print("IN HERE")
             break
-
         elif("play" in voiceCommand.lower() or "start" in voiceCommand.lower() or "game" in voiceCommand.lower()):
             sm.current = 'game'
-            #need to find way to stop threads
-            game = Thread(target = GameLogic)
+            #make medium default difficulty
+            game = Thread(target = GameLogic,args=[2])
             game.setDaemon(True)
             game.start()
             break
@@ -162,6 +164,23 @@ def Main():
             sm.current =  'mainmenu'
         elif('level' in voiceCommand.lower() or 'change' in voiceCommand.lower() or 'difficulty' in voiceCommand):
             sm.current =  'difficulty'
+        if("easy" in voiceCommand.lower()):
+            sm.current = 'game'
+            #need to find way to stop threads
+            game = Thread(target = GameLogic,args=[3])
+            game.setDaemon(True)
+            game.start()
+        elif("medium" in voiceCommand.lower()):
+            sm.current = 'game'
+            game = Thread(target = GameLogic,args=[2])
+            game.setDaemon(True)
+            game.start()
+        elif("hard" in voiceCommand.lower()):
+            sm.current = 'game'
+            #need to find way to stop threads
+            game = Thread(target = GameLogic,args=[1])
+            game.setDaemon(True)
+            game.start()
         else:
             #if user tries saying something that is not in commands
             print("Not a command valid commands are: ")
@@ -175,7 +194,13 @@ main.start()
 class MainApplication(App):
     def build(self):
         return sm
-
+    def animate(self,widget,color):
+        #ref for tutorial: https://youtu.be/qMKPNqbuR5Y
+        anim = Animation(background_color = (255,255,255,1),duration = 1)
+        anim += Animation(background_color=color,duration=1)
+        anim += Animation(background_color=color,duration=0.3)
+        anim.start(widget)
+        print("IN Main ",self, " ", widget)
 if __name__ == '__main__':
     MainApplication().run()
     #will need sr to run in paralell with gui

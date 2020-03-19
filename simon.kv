@@ -40,23 +40,21 @@
             on_press: root.manager.current ="mainmenu"
 <GameMenu>
     name: "game"
-    
+    red: red
     GridLayout:
         cols: 2
         rows: 2
         Button:
             id: red
+            text:"RED"
             background_color: (255,0,0,1)
             on_release: app.animate(self,(255,0,0,1))
         Button:
             id: blue
             background_color: (0,255,0,1)
-            on_release: app.animate(self,(0,255,0,1))
         Button:
             id: green
             background_color: (0,0,255,1)
-            on_release: app.animate(self, (0,0,255,1))
         Button:
             id: yellow
             background_color: (255,255,0,1)
-            on_release: app.animate(self,(255,255,0,1))
