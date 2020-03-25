@@ -17,7 +17,7 @@ Python is a great programming language which has lots of libraries which can be 
 
 ## Running
 
-To run this program you just run the simple command app.py in the project directory.
+To run this program you just run the simple command main.py in the project directory.
 
 ```bash
 > git clone https://github.com/Ultan-Kearns/GestureBasedUIProject
