@@ -22,7 +22,9 @@ To run this program you just run the simple command main.py in the project direc
 ```bash
 > git clone https://github.com/Ultan-Kearns/GestureBasedUIProject
 > cd GestureBasedUIProject
-> python3 app.py
+> python3 main.py
 ```
 
 See [development wiki page](https://github.com/Ultan-Kearns/GestureBasedUIProject/wiki/Development) for more.
+### Notes
+Android APK located in the bin folder.
